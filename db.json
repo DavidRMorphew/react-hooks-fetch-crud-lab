@@ -65,17 +65,6 @@
         "controlled"
       ],
       "correctIndex": 1
-    },
-    {
-      "prompt": "React is a library / framework built on the ____ coding language",
-      "answers": [
-        "JavaScript",
-        "Ruby",
-        "R",
-        "C++"
-      ],
-      "correctIndex": 0,
-      "id": 7
     }
   ]
 }

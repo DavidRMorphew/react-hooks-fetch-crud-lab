@@ -35,7 +35,6 @@ function QuestionForm({addQuestion}) {
     fetch(url, configBody)
     .then(resp => resp.json())
     .then(newQuestion => {
-      console.log(newQuestion)
       addQuestion(newQuestion)
     })
     

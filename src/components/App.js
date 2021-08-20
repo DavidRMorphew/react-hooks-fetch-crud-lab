@@ -12,6 +12,16 @@ function App() {
     setQuestions((questions) => [...questions, newQuestion])
   }
 
+  const removeQuestion = (id) => {
+    const configBody = {
+      method: 'DELETE',
+    }
+    fetch(url + '/' + id, configBody)
+    const deleteQuestion = questions.find(question => question.id === id)
+    const deleteIndex = questions.indexOf(deleteQuestion)
+    setQuestions((questions) => [...questions.slice(0, deleteIndex), ...questions.slice(deleteIndex + 1)])
+  }
+
   useEffect(()=>{
     fetch(url)
     .then(resp => resp.json())
@@ -22,9 +32,8 @@ function App() {
 
   return (
     <main>
-      {console.log(questions)}
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm addQuestion={addQuestion}/> : <QuestionList questions={questions} />}
+      {page === "Form" ? <QuestionForm addQuestion={addQuestion}/> : <QuestionList questions={questions} removeQuestion={removeQuestion}/>}
     </main>
   );
 }
