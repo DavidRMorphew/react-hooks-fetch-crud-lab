@@ -22,6 +22,22 @@ function App() {
     setQuestions((questions) => [...questions.slice(0, deleteIndex), ...questions.slice(deleteIndex + 1)])
   }
 
+  const updateAnswer = (questionId, correctedIndex) => {
+    const configBody = { 
+      method: 'PATCH',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ correctIndex: correctedIndex })
+    }
+    fetch(url + '/' + questionId, configBody)
+    .then(resp => resp.json())
+    .then(updatedQuestion => {
+      console.log(updatedQuestion)
+      const question = questions.find(question => question.id === questionId)
+      const updatedQuestionIndex = questions.indexOf(question)
+      setQuestions((questions) => [...questions.slice(0, updatedQuestionIndex), updatedQuestion, ...questions.slice(updatedQuestionIndex + 1)])
+    })
+  }
+
   useEffect(()=>{
     fetch(url)
     .then(resp => resp.json())
@@ -33,7 +49,7 @@ function App() {
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm addQuestion={addQuestion}/> : <QuestionList questions={questions} removeQuestion={removeQuestion}/>}
+      {page === "Form" ? <QuestionForm addQuestion={addQuestion}/> : <QuestionList questions={questions} removeQuestion={removeQuestion} updateAnswer={updateAnswer}/>}
     </main>
   );
 }
